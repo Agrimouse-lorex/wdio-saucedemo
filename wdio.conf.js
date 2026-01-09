@@ -5,7 +5,7 @@ exports.config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
-    // port: 4723, // commented out for desktop Chrome
+    port: 4723, // commented out for desktop Chrome
     //
     // ==================
     // Specify Test Files
@@ -26,7 +26,7 @@ exports.config = {
     ],
     // Patterns to exclude.
     exclude: [
-        // 'path/to/excluded/files'
+        './test/specs/test1.spec.js'
     ],
     //
     // ============
@@ -50,12 +50,24 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [
-    {
-        // capabilities for desktop Chrome
-        browserName: 'chrome',
-        'goog:chromeOptions': { }
-    }
+    capabilities: [ {
+    // {
+    //     // capabilities for desktop Chrome
+    //     browserName: 'chrome',
+    //     'goog:chromeOptions': { }
+    // }
+    browserName: 'Chrome',
+    'appium:platformName': 'Android',
+    'appium:deviceName': 'emulator-5554',
+    'appium:deviceformVersion': '14',
+    'appium:automationName': 'UiAutomator2',
+    'sauce:options': {
+        appiumVersion: '2.11.0',
+        build: '<your build id>',
+        name: 'TestUser1',
+        deviceOrientation: 'PORTRAIT',
+    },
+}
     ],
 
     //

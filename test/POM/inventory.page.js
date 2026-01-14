@@ -25,19 +25,19 @@ export default class InventoryPage{
         return $$('img[class="inventory_item_img"]')
     }   
     get addToCartButtons(){
-        return $$('button[class="btn btn_primary btn_small btn_inventory"]')
+        return $$('button[class="btn btn_primary btn_small btn_inventory "]')
     }
     get removeButtons(){
-        return $$('button[class="btn btn_secondary btn_small btn_inventory"]')
+        return $$('button[class="btn btn_secondary btn_small btn_inventory "]')
     }
     get shoppingCartBadge(){
-        return $('span[class="shopping_cart_badge"]')
+        return $('span[data-test="shopping-cart-badge"]')
     }
     get shoppingCartLink(){
         return $('a[class="shopping_cart_link"]')
     }
     get productSortContainer(){
-        return $('select[data-test="product_sort_container"]')
+        return $('select[data-test="product-sort-container"]')
     }
     get burgerMenuButton(){
         return $('button[id="react-burger-menu-btn"]')
@@ -47,12 +47,16 @@ export default class InventoryPage{
     }
 
     async logout(){
-        await this.burgerMenuButton.click()
-        await this.logoutLink.waitForDisplayed({timeout:5000})
+        if (!(await this.logoutLink.isClickable())) {
+            await this.burgerMenuButton.click()
+        }
+        await this.logoutLink.waitForClickable({timeout:5000})
         await this.logoutLink.click()
+        await expect(browser).toHaveUrl('https://www.saucedemo.com/')
     }
-    async sortProductsBy(optionText){
-        await this.productSortContainer.selectByVisibleText(optionText)
+    async sortProductsBy(){
+        console.log(await this.productSortContainer.getValue())
+        await this.productSortContainer.selectByIndex(2)
     }
     async addAllProductsToCart(){
         for await (const btn of await this.addToCartButtons){
@@ -96,4 +100,10 @@ export default class InventoryPage{
             await expect(img).toBeDisplayed()
         }
     }
+    async logoutButtonVisible(){
+        await this.burgerMenuButton.click()
+        await this.logoutLink.waitForDisplayed({timeout:5000})
+        await expect(this.logoutLink).toBeDisplayed()
+    }
 }
+

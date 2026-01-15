@@ -47,7 +47,8 @@ export default class InventoryPage{
     }
 
     async logout(){
-        if (!(await this.logoutLink.isClickable())) {
+        if (!(await this.logoutLink.isDisplayed({ withinViewport: true }))) {
+            await this.burgerMenuButton.scrollIntoView();
             await this.burgerMenuButton.click()
         }
         await this.logoutLink.waitForClickable({timeout:5000})

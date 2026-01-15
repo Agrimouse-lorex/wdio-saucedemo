@@ -2,7 +2,7 @@ import LoginPage from "../POM/login.page"
 const loginPage = new LoginPage()
 
 
-describe.skip('SauceDemo login test', function() {
+describe('SauceDemo login test', function() {
     it('Login as standart user', async () => {
         await browser.url('https://www.saucedemo.com/')
         await loginPage.login('standard_user', 'secret_sauce')

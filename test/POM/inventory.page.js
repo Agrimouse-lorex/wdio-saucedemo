@@ -1,110 +1,110 @@
-export default class InventoryPage{
+export default class InventoryPage {
 
-    get productTitle(){
-        return $('span[class="title"]')
+    get pageTitle() {
+        return $('//span[@data-test="title" and contains(text(),"Products")]')
     }
-    get inventoryItems(){
+    get inventoryItems() {
         return $$('div[class="inventory_item"]')
-    }  
-    get sortContainer(){
+    }
+    get sortContainer() {
         return $('select[data-test="product_sort_container"]')
     }
-    get inventoryItemNames(){
+    get inventoryItemNames() {
         return $$('div[class="inventory_item_name"]')
     }
-    get inventoryItemPrices(){
+    get inventoryItemPrices() {
         return $$('div[class="inventory_item_price"]')
-    }  
-    get inventoryDescriptions(){
+    }
+    get inventoryDescriptions() {
         return $$('div[class="inventory_item_desc"]')
     }
-    get inventoryAddToCartButton(){
+    get inventoryAddToCartButton() {
         return $$('button[class="btn btn_primary btn_small btn_inventory"]')
-    } 
-    get inventoryItemImgs(){
+    }
+    get inventoryItemImgs() {
         return $$('img[class="inventory_item_img"]')
-    }   
-    get addToCartButtons(){
+    }
+    get addToCartButtons() {
         return $$('button[class="btn btn_primary btn_small btn_inventory "]')
     }
-    get removeButtons(){
+    get removeButtons() {
         return $$('button[class="btn btn_secondary btn_small btn_inventory "]')
     }
-    get shoppingCartBadge(){
+    get shoppingCartBadge() {
         return $('span[data-test="shopping-cart-badge"]')
     }
-    get shoppingCartLink(){
+    get shoppingCartLink() {
         return $('a[class="shopping_cart_link"]')
     }
-    get productSortContainer(){
+    get productSortContainer() {
         return $('select[data-test="product-sort-container"]')
     }
-    get burgerMenuButton(){
+    get burgerMenuButton() {
         return $('button[id="react-burger-menu-btn"]')
     }
-    get logoutLink(){
+    get logoutLink() {
         return $('a[id="logout_sidebar_link"]')
     }
 
-    async logout(){
-        if (!(await this.logoutLink.isDisplayed({ withinViewport: true }))) {
+    async logout() {
+        if (!(await this.logoutLink.isDisplayed())) {
             await this.burgerMenuButton.scrollIntoView();
             await this.burgerMenuButton.click()
         }
-        await this.logoutLink.waitForClickable({timeout:5000})
+        await this.logoutLink.waitForClickable({ timeout: 5000 })
         await this.logoutLink.click()
-        await expect(browser).toHaveUrl('https://www.saucedemo.com/')
+        
     }
-    async sortProductsBy(){
-        console.log(await this.productSortContainer.getValue())
-        await this.productSortContainer.selectByIndex(2)
-    }
-    async addAllProductsToCart(){
-        for await (const btn of await this.addToCartButtons){
+    async sortProductsByIndex(index) {
+        if(Number.isInteger(index) && index >= 0 && index <= 3){
+        await this.productSortContainer.selectByIndex(index)
+        } else {
+        throw new Error('Index out of range. Valid indices are: 0, 1, 2, 3.')
+        }
+}
+    async addAllProductsToCart() {
+        for await (const btn of await this.addToCartButtons) {
             await btn.click()
         }
     }
-    async removeAllProductsFromCart(){
-        for await (const btn of await this.removeButtons){
+    async removeAllProductsFromCart() {
+        for await (const btn of await this.removeButtons) {
             await btn.click()
         }
     }
-    async productItemVisible(){
-        for await (const item of await this.inventoryItems){
-            await expect(item).toBeDisplayed()
-        }
-    }
-    async getInventoryItemNames(){
+    async getInventoryItemNames() {
         const names = []
-        for await (const nameElement of await this.inventoryItemNames){
+        for await (const nameElement of await this.inventoryItemNames) {
             const nameText = await nameElement.getText()
             names.push(nameText)
         }
         console.log(names)
         return names
     }
-    async getInventoryItemPrices(){
+    async getInventoryItemPrices() {
         const prices = []
-        for await (const priceElement of await this.inventoryItemPrices){
+        for await (const priceElement of await this.inventoryItemPrices) {
             const priceText = await priceElement.getText()
             prices.push(priceText)
         }
         console.log(prices)
         return prices
     }
-    async checkProductTitle(){
-        await expect(this.productTitle).toBeDisplayed()
+    async checkPageTitleForVisibility() {
+        const result = await this.pageTitle.toBeDisplayed()
+        console.log(result)
+        return result
     }
-    async checkInventoryItemsDisplayed(){
-        for await (const img of await this.inventoryItems){
+    async checkInventoryItemsDisplayed() {
+        for await (const img of await this.inventoryItems) {
             console.log(await img.getAttribute('src'))
             await expect(img).toBeDisplayed()
         }
     }
-    async logoutButtonVisible(){
+    async isBurgerMenuOpened() {
         await this.burgerMenuButton.click()
-        await this.logoutLink.waitForDisplayed({timeout:5000})
-        await expect(this.logoutLink).toBeDisplayed()
+        const result = await this.logoutLink.isDisplayed()
+        return result
     }
 }
 

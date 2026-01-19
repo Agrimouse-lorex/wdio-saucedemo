@@ -1,39 +1,39 @@
-export default class LoginPage{
+export default class LoginPage {
 
-    get usernameInputElement(){
+    get usernameInput() {
         return $('//input[@data-test="username"]')
     }
-    get passwordInputElement(){
+    get passwordInput() {
         return $('//input[@data-test="password"]')
     }
-    get loginButtonElement(){
+    get loginButton() {
         return $('//input[@data-test="login-button"]')
     }
-    get loginCheckElement(){
-        return $('span[class="title"]')
+    get pageTitle() {
+        return $('//span[@data-test="title" and contains(text(),"Products")]')
     }
-    get errorMessage(){
+    get errorMessage() {
         return $('h3[data-test="error"]')
     }
 
-    async login(username, password){
-        await this.usernameInputElement.setValue(username)
-        await this.passwordInputElement.setValue(password)
-        await this.loginButtonElement.click()
+    async login(username, password) {
+        await this.usernameInput.setValue(username)
+        await this.passwordInput.setValue(password)
+        await this.loginButton.click()
     }
     async loginCheck() {
-        await expect(this.loginCheckElement).toBeDisplayed()
+        await expect(this.pageTitle).toBeDisplayed()
         console.log('Login successful')
     }
-    async errorMessageCheck(){
+    async errorMessageCheck() {
         await expect(this.errorMessage).toBeDisplayed()
         console.log('Login failed, error message displayed')
     }
-    async errorMessageCheckForText(errorText){
+    async errorMessageCheckForText(errorText) {
         await expect(this.errorMessage).toHaveText(errorText)
         console.log('Login failed, error message displayed')
     }
-    async checkUrl(){
+    async verifyPageIsOpen() {
         await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
     }
 }

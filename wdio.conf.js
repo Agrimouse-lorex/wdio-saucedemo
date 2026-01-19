@@ -22,7 +22,8 @@ exports.config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './test/specs/**/*.js'
+        // './test/specs/**/*.js'
+        './test/mobtest/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -50,24 +51,15 @@ exports.config = {
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [ {
-    // {
-        // capabilities for desktop Chrome
-        browserName: 'chrome',
-        'goog:chromeOptions': { }
-    // },
-    // browserName: 'Chrome',
-    // 'appium:platformName': 'Android',
-    // 'appium:deviceName': 'emulator-5554',
-    // 'appium:deviceformVersion': '14',
-    // 'appium:automationName': 'UiAutomator2',
-    // 'sauce:options': {
-    //     appiumVersion: '2.11.0',
-    //     build: '<your build id>',
-    //     name: 'TestUser1',
-    //     deviceOrientation: 'PORTRAIT',
-    // },
-}
+    capabilities: [{
+
+        // "platformName": "Android",
+        // "appium:platformVersion": "16.0",
+        // "appium:deviceName": "emul-small",
+        // "appium:automationName": "UiAutomator2",
+        "browserName": "Chrome"
+
+    }
     ],
 
     //
@@ -117,7 +109,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: [ 'firefox-profile', 'vscode'],
+    services: ['firefox-profile', 'vscode'],
 
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -126,7 +118,7 @@ exports.config = {
     // Make sure you have the wdio adapter package for the specific framework installed
     // before running any tests.
     framework: 'mocha',
-    
+
     //
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
@@ -140,7 +132,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec',['allure', {outputDir: 'allure-results'}]],
+    reporters: ['spec', ['allure', { outputDir: 'allure-results' }]],
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -243,7 +235,7 @@ exports.config = {
      * @param {boolean} result.passed    true if test has passed, otherwise false
      * @param {object}  result.retries   information about spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    afterTest: async function(test, context, { error, result, duration, passed, retries }) {
+    afterTest: async function (test, context, { error, result, duration, passed, retries }) {
         if (!passed) {
             await browser.takeScreenshot();
         }

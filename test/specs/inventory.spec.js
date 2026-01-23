@@ -13,7 +13,7 @@ describe('Product page tests after login', () => {
         await loginPage.verifyPageIsOpen()
         await expect(invPage.checkPageTitleForVisibility()).toBeTruthy()
     })
-    
+
     it('Check inventory items after login', async () => {
         await loginPage.verifyPageIsOpen()
         await invPage.checkInventoryItemsDisplayed()

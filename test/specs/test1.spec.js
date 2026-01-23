@@ -1,4 +1,4 @@
-describe('Demo Tests', function() {
+describe('Demo Tests', function () {
     it('My first test', async () => {
         await browser.url('https://google.com')
         await $('textarea[jsname="yZiJbe"]').setValue('WebdriverIO')

@@ -1,0 +1,11 @@
+    Boot Appium inspector: 
+appium --use-plugins=inspector --allow-cors
+    Boot Appium server: 
+appium
+    Boot emulator: 
+emulator -avd nightwatch-android-11
+    AVD devices list: 
+emulator -list-avds
+    Appium inspector URL: 
+http://localhost:4723/inspector
+

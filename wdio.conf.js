@@ -5,7 +5,7 @@ exports.config = {
     // ====================
     // WebdriverIO supports running e2e tests as well as unit and component tests.
     runner: 'local',
-    // port: 4723, // commented out for desktop Chrome
+    port: 4723, // commented out for desktop Chrome
     //
     // ==================
     // Specify Test Files
@@ -22,11 +22,13 @@ exports.config = {
     // of the config file unless it's absolute.
     //
     specs: [
-        // './test/specs/**/*.js'
-        './test/mobtest/*.js'
+        // './test/specs/**/*.js',
+        './test/mobtest/test.spec.js',
+        './test/mobtest/mobile-login.spec.js',
     ],
     // Patterns to exclude.
     exclude: [
+
         './test/specs/test1.spec.js'
     ],
     //
@@ -45,22 +47,29 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
+
+    automationProtocol: 'webdriver',
+
     capabilities: [{
-
-        // "platformName": "Android",
-        // "appium:platformVersion": "16.0",
-        // "appium:deviceName": "emul-small",
-        // "appium:automationName": "UiAutomator2",
-        "browserName": "Chrome"
-
-    }
-    ],
+        "platformName": "Android",
+        "appium:platformVersion": "16.0",
+        "appium:deviceName": "emul-small",
+        "appium:automationName": "uiautomator2",
+        browserName: "Chrome",
+        webSocketUrl: false,
+        'appium:chromedriverAutodownload': true,
+        // 'appium:noReset': true,
+        'appium:ensureWebviewsHavePages': false,
+        'appium:nativeWebScreenshot': false,
+        'appium:connectHardwareKeyboard': false,
+        "appium:uiautomator2ServerLaunchTimeout": 120000  // Increase from 30s default to 120s
+    }],
 
     //
     // ===================
@@ -109,8 +118,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['firefox-profile', 'vscode'],
-
+    services: ['appium'],
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
     // see also: https://webdriver.io/docs/frameworks

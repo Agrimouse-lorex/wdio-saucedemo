@@ -23,11 +23,12 @@ exports.config = {
     //
     specs: [
         // './test/specs/**/*.js',
-        './test/mobtest/test.spec.js'
+        './test/mobtest/test.spec.js',
+        './test/mobtest/mobile-login.spec.js',
     ],
     // Patterns to exclude.
     exclude: [
-        './test/mobtest/mobile-login.spec.js',
+
         './test/specs/test1.spec.js'
     ],
     //
@@ -46,7 +47,7 @@ exports.config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
@@ -61,10 +62,12 @@ exports.config = {
         "appium:deviceName": "emul-small",
         "appium:automationName": "uiautomator2",
         browserName: "Chrome",
-        // webSocketUrl: false,
-        // 'appium:chromedriverAutodownload': true,
+        webSocketUrl: false,
+        'appium:chromedriverAutodownload': true,
         // 'appium:noReset': true,
-        // 'appium:ensureWebviewsHavePages': true,
+        'appium:ensureWebviewsHavePages': false,
+        'appium:nativeWebScreenshot': false,
+        'appium:connectHardwareKeyboard': false,
         "appium:uiautomator2ServerLaunchTimeout": 120000  // Increase from 30s default to 120s
     }],
 

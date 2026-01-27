@@ -1,22 +1,23 @@
 export default class LoginPage {
 
     get usernameInput() {
-        return $('//input[@data-test="username"]')
+        return $('#user-name')
     }
     get passwordInput() {
-        return $('//input[@data-test="password"]')
+        return $('#password')
     }
     get loginButton() {
-        return $('//input[@data-test="login-button"]')
+        return $('#login-button')
     }
     get pageTitle() {
-        return $('//span[@data-test="title" and contains(text(),"Products")]')
+        return $('span.title')
     }
     get errorMessage() {
-        return $('h3[data-test="error"]')
+        return $('[data-test="error"]')
     }
 
     async login(username, password) {
+        await this.usernameInput.waitForExist({ timeout: 20000 })
         await this.usernameInput.setValue(username)
         await this.passwordInput.setValue(password)
         await this.loginButton.click()
@@ -35,5 +36,7 @@ export default class LoginPage {
     }
     async verifyPageIsOpen() {
         await expect(browser).toHaveUrl('https://www.saucedemo.com/inventory.html')
+        await expect(this.pageTitle).toHaveText('Products')
+        console.log('Inventory page is open')
     }
 }
